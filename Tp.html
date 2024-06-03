@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicios de JavaScript</title>
+</head>
+<body>
+    <h1>Ejercicios de JavaScript</h1>
+
+    <section>
+        <h2>Ejercicio 1</h2>
+        <p>Programa una función para contar el número de veces que se repite una palabra en un texto largo.</p>
+        <form id="form-ejercicio-1">
+            <label for="texto1">Texto: </label>
+            <input type="text" id="texto1" required>
+            <label for="palabra1">Palabra: </label>
+            <input type="text" id="palabra1" required>
+            <button type="submit">Contar</button>
+        </form>
+        <p id="resultado1"></p>
+        <script>
+            const form1 = document.getElementById('form-ejercicio-1');
+            const resultado1 = document.getElementById('resultado1');
+
+            form1.addEventListener('submit', event => {
+                event.preventDefault();
+                const texto = document.getElementById('texto1').value;
+                const palabra = document.getElementById('palabra1').value;
+                const contarPalabras = (texto, palabra) => {
+                    const regex = new RegExp(`\\b${palabra}\\b`, 'gi');
+                    return (texto.match(regex) || []).length;
+                };
+                resultado1.textContent = `La palabra "${palabra}" se repite ${contarPalabras(texto, palabra)} veces.`;
+            });
+        </script>
+    </section>
+
+    <section>
+        <h2>Ejercicio 2</h2>
+        <p>Programa una función que elimine cierto patrón de caracteres de un texto dado.</p>
+        <form id="form-ejercicio-2">
+            <label for="texto2">Texto: </label>
+            <input type="text" id="texto2" required>
+            <label for="patron2">Patrón: </label>
+            <input type="text" id="patron2" required>
+            <button type="submit">Eliminar</button>
+        </form>
+        <p id="resultado2"></p>
+        <script>
+            const form2 = document.getElementById('form-ejercicio-2');
+            const resultado2 = document.getElementById('resultado2');
+
+            form2.addEventListener('submit', event => {
+                event.preventDefault();
+                const texto = document.getElementById('texto2').value;
+                const patron = document.getElementById('patron2').value;
+                const eliminarPatron = (texto, patron) => {
+                    const regex = new RegExp(patron, 'gi');
+                    return texto.replace(regex, '');
+                };
+                resultado2.textContent = eliminarPatron(texto, patron);
+            });
+        </script>
+    </section>
+
+    <section>
+        <h2>Ejercicio 3</h2>
+        <p>Programa una función para convertir números de base binaria a decimal y viceversa.</p>
+        <form id="form-ejercicio-3">
+            <label for="numero3">Número: </label>
+            <input type="text" id="numero3" required>
+            <label for="base3">Base (2 o 10): </label>
+            <input type="number" id="base3" required>
+            <button type="submit">Convertir</button>
+        </form>
+        <p id="resultado3"></p>
+        <script>
+            const form3 = document.getElementById('form-ejercicio-3');
+            const resultado3 = document.getElementById('resultado3');
+
+            form3.addEventListener('submit', event => {
+                event.preventDefault();
+                const numero = document.getElementById('numero3').value;
+                const base = parseInt(document.getElementById('base3').value, 10);
+                const convertirBase = (numero, base) => {
+                    if (base === 2) {
+                        return parseInt(numero, 2);
+                    } else if (base === 10) {
+                        return Number(numero).toString(2);
+                    } else {
+                        throw new Error("Base no soportada. Usa 2 para binario o 10 para decimal.");
+                    }
+                };
+                resultado3.textContent = convertirBase(numero, base);
+            });
+        </script>
+    </section>
+
+    <section>
+        <h2>Ejercicio 4</h2>
+        <p>Programa una función que dada una fecha válida determine cuantos años han pasado hasta el día de hoy.</p>
+        <form id="form-ejercicio-4">
+            <label for="fecha4">Fecha (YYYY-MM-DD): </label>
+            <input type="date" id="fecha4" required>
+            <button type="submit">Calcular</button>
+        </form>
+        <p id="resultado4"></p>
+        <script>
+            const form4 = document.getElementById('form-ejercicio-4');
+            const resultado4 = document.getElementById('resultado4');
+
+            form4.addEventListener('submit', event => {
+                event.preventDefault();
+                const fecha = new Date(document.getElementById('fecha4').value);
+                const calcularAnios = fecha => {
+                    const hoy = new Date();
+                    let anios = hoy.getFullYear() - fecha.getFullYear();
+                    const mes = hoy.getMonth() - fecha.getMonth();
+                    if (mes < 0 || (mes === 0 && hoy.getDate() < fecha.getDate())) {
+                        anios--;
+                    }
+                    return anios;
+                };
+                resultado4.textContent = `${calcularAnios(fecha)} años han pasado desde ${fecha.getFullYear()}.`;
+            });
+        </script>
+    </section>
+
+    <section>
+        <h2>Ejercicio 5</h2>
+        <p>Programa una función que dada una cadena de texto cuente el número de vocales y consonantes.</p>
+        <form id="form-ejercicio-5">
+            <label for="texto5">Texto: </label>
+            <input type="text" id="texto5" required>
+            <button type="submit">Contar</button>
+        </form>
+        <p id="resultado5"></p>
+        <script>
+            const form5 = document.getElementById('form-ejercicio-5');
+            const resultado5 = document.getElementById('resultado5');
+
+            form5.addEventListener('submit', event => {
+                event.preventDefault();
+                const texto = document.getElementById('texto5').value;
+                const contarVocalesConsonantes = texto => {
+                    const vocales = texto.match(/[aeiouáéíóúü]/gi)?.length || 0;
+                    const consonantes = texto.match(/[bcdfghjklmnpqrstvwxyzñ]/gi)?.length || 0;
+                    return { vocales, consonantes };
+                };
+                const { vocales, consonantes } = contarVocalesConsonantes(texto);
+                resultado5.textContent = `Vocales: ${vocales}, Consonantes: ${consonantes}.`;
+            });
+        </script>
+    </section>
+
+    <section>
+        <h2>Ejercicio 6</h2>
+        <p>Programa una función que dado un arreglo de elementos, elimine los duplicados.</p>
+        <form id="form-ejercicio-6">
+            <label for="arreglo6">Arreglo (separado por comas): </label>
+            <input type="text" id="arreglo6" required>
+            <button type="submit">Eliminar Duplicados</button>
+        </form>
+        <p id="resultado6"></p>
+        <script>
+            const form6 = document.getElementById('form-ejercicio-6');
+            const resultado6 = document.getElementById('resultado6');
+
+            form6.addEventListener('submit', event => {
+                event.preventDefault();
+                const arreglo = document.getElementById('arreglo6').value.split(',').map(item => item.trim());
+                const eliminarDuplicados = arreglo => [...new Set(arreglo)];
+                resultado6.textContent = `Arreglo sin duplicados: [${eliminarDuplicados(arreglo).join(', ')}]`;
+            });
+        </script>
+    </section>
+
+    <section>
+        <h2>Ejercicio 7</h2>
+        <p>Programa una función que dado un arreglo de números obtenga el promedio.</p>
+        <form id="form-ejercicio-7">
+            <label for="numeros7">Números (separados por comas): </label>
+            <input type="text" id="numeros7" required>
+            <button type="submit">Calcular Promedio</button>
+        </form>
+        <p id="resultado7"></p>
+        <script>
+            const form7 = document.getElementById('form-ejercicio-7');
+            const resultado7 = document.getElementById('resultado7');
+
+            form7.addEventListener('submit', event => {
+                event.preventDefault();
+                const numeros = document.getElementById('numeros7').value.split(',').map(num => parseFloat(num.trim()));
+                const promedio = numeros => numeros.reduce((acc, num) => acc + num, 0) / numeros.length;
+                resultado7.textContent = `Promedio: ${promedio(numeros)}`;
+            });
+        </script>
+    </section>
+
+    <section>
+        <h2>Ejercicio 8</h2>
+        <p>Programa una clase llamada Pelicula.</p>
+        <form id="form-ejercicio-8">
+            <label for="id8">ID: </label>
+            <input type="text" id="id8" required>
+            <label for="titulo8">Título: </label>
+            <input type="text" id="titulo8" required>
+            <label for="director8">Director: </label>
+            <input type="text" id="director8" required>
+            <label for="estreno8">Año de estreno: </label>
+            <input type="number" id="estreno8" required>
+            <label for="paises8">País(es) (separados por comas): </label>
+            <input type="text" id="paises8" required>
+            <label for="generos8">Géneros (separados por comas): </label>
+            <input type="text" id="generos8" required>
+            <label for="calificacion8">Calificación: </label>
+            <input type="number" step="0.1" id="calificacion8" required>
+            <button type="submit">Agregar Película</button>
+        </form>
+        <p id="resultado8"></p>
+        <script>
+            class Pelicula {
+                static generosAceptados = ["Action", "Animation", "Comedy", "Drama", "Horror", "Musical", "Thriller"];
+
+                constructor({ id, titulo, director, estreno, paises, generos, calificacion }) {
+                    if (!/^[a-zA-Z]{2}\d{7}$/.test(id)) throw new Error("ID inválido. Debe tener 9 caracteres, los primeros 2 letras y los 7 restantes números.");
+                    if (titulo.length > 100) throw new Error("El título no debe superar los 100 caracteres.");
+                    if (director.length > 50) throw new Error("El director no debe superar los 50 caracteres.");
+                    if (!/^\d{4}$/.test(estreno)) throw new Error("El año de estreno debe ser un número entero de 4 dígitos.");
+                    if (!Array.isArray(paises)) throw new Error("El país o países deben ser un arreglo.");
+                    if (!Array.isArray(generos) || !generos.every(gen => Pelicula.generosAceptados.includes(gen))) throw new Error("Géneros inválidos.");
+                    if (typeof calificacion !== 'number' || calificacion < 0 || calificacion > 10) throw new Error("La calificación debe ser un número entre 0 y 10.");
+
+                    this.id = id;
+                    this.titulo = titulo;
+                    this.director = director;
+                    this.estreno = estreno;
+                    this.paises = paises;
+                    this.generos = generos;
+                    this.calificacion = calificacion;
+                }
+
+                static getGenerosAceptados() {
+                    return Pelicula.generosAceptados;
+                }
+
+                fichaTecnica() {
+                    return `
+                        Título: ${this.titulo}
+                        Director: ${this.director}
+                        Año de Estreno: ${this.estreno}
+                        País(es): ${this.paises.join(", ")}
+                        Géneros: ${this.generos.join(", ")}
+                        Calificación: ${this.calificacion}
+                    `;
+                }
+            }
+
+            const peliculas = [];
+
+            const form8 = document.getElementById('form-ejercicio-8');
+            const resultado8 = document.getElementById('resultado8');
+
+            form8.addEventListener('submit', event => {
+                event.preventDefault();
+                try {
+                    const peliculaData = {
+                        id: document.getElementById('id8').value,
+                        titulo: document.getElementById('titulo8').value,
+                        director: document.getElementById('director8').value,
+                        estreno: parseInt(document.getElementById('estreno8').value, 10),
+                        paises: document.getElementById('paises8').value.split(',').map(pais => pais.trim()),
+                        generos: document.getElementById('generos8').value.split(',').map(genero => genero.trim()),
+                        calificacion: parseFloat(document.getElementById('calificacion8').value)
+                    };
+
+                    const pelicula = new Pelicula(peliculaData);
+                    peliculas.push(pelicula);
+                    resultado8.textContent = peliculas.map(p => p.fichaTecnica()).join('\n\n');
+                } catch (error) {
+                    resultado8.textContent = `Error: ${error.message}`;
+                }
+            });
+        </script>
+    </section>
+
+</body>
+</html>
